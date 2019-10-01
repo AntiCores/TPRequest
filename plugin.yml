@@ -1,0 +1,56 @@
+{
+  "name": "TPRequest",
+  "main": "Thunder33345\\TPRequest\\TPRequest",
+  "author": "Thunder33345",
+  "description": "",
+  "website": "",
+  "version": "1.0.0",
+  "api": [
+    "3.0.0"
+  ],
+  "permission": {
+    "tprequest": {
+      "defualt": "false",
+      "description": "TP Request main node",
+      "children": {
+        "tprequest.request": {
+          "defualt": "true",
+          "description": "Permission to request a tp request"
+        },
+        "tprequest.requesthere": {
+          "defualt": "true",
+          "description": "Permission to request a tp here request"
+        },
+        "tprequest.list": {
+          "defualt": "true",
+          "description": "Permission to list tp request"
+        },
+        "tprequest.accept": {
+          "defualt": "true",
+          "description": "Permission to accept tp request"
+        },
+        "tprequest.deny": {
+          "defualt": "true",
+          "description": "Permission to deny tp request"
+        },
+        "tprequest.ignore": {
+          "defualt": "true",
+          "description": "Permission to manage ignore list"
+        },
+        "tprequest.bypass": {
+          "defualt": "false",
+          "description": "TP Request main bypass node",
+          "children": {
+            "tprequest.bypass.coodlown": {
+              "defualt": "false",
+              "description": "Permission to bypass tp request cooldown"
+            },
+            "tprequest.bypass.warmup": {
+              "defualt": "false",
+              "description": "Permission to bypass tp warmup"
+            }
+          }
+        }
+      }
+    }
+  }

@@ -1,0 +1,38 @@
+---
+# TP Request Config
+
+request: {
+  # How Long before the TP request timeouts
+  timeout: 60,
+  # How long you have to wait before you can send a request after you sent one
+  cooldown: 30,
+  # How long of a cooldown penalty you would get added onto if your tp request was denied
+  deniedCooldown: "45"
+}
+
+##everything below is not implemented
+#warmup: {
+#  time: 10,
+#  #for the person who will be teleporting away
+#  summoned:{
+#    #Effects to give on successful
+#    effects: [
+#      ABSORPTION: {duration: 10,level: 7}
+#    ],
+#    #radius to stay in when tp starts, 0 for no movement, -1 to allow move anywhere
+#    radius: 5,
+#    #how many times can they receive damage
+#    damage: 3
+#  },
+#  #for the person who will be summoning
+#  summoner:{
+#    #Effects to give on successful
+#    effects: [
+#      ABSORPTION: {duration: 10,level: 7}
+#    ],
+#    #radius to stay in when tp starts, 0 for no movement, -1 to allow move anywhere
+#    radius: 5,
+#    #how many times can they receive damage
+#    damage: 3
+#  }
+#}
