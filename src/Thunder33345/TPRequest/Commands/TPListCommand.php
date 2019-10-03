@@ -17,10 +17,10 @@ class TPListCommand extends PluginCommand implements CommandExecutor
 
 	public function __construct(TPRequest $owner)
 	{
-		parent::__construct('tplist', $owner);
+		parent::__construct('tprlist', $owner);
 		$this->setDescription('TP List Command');
-		$this->setUsage('/tplist');
-		$this->setAliases(['tpl']);
+		$this->setUsage('/tprlist');
+		$this->setAliases(['tprl']);
 		$this->setPermission('tprequest.list');
 		$this->setPermissionMessage(TPRequest::PREFIX() . 'Insufficient permissions.');
 		$this->setExecutor($this);
@@ -40,10 +40,10 @@ class TPListCommand extends PluginCommand implements CommandExecutor
 		$forExp = '';
 		foreach($for as $request){
 			if(!$request->isValid()){
-				$forExp .= TPRequest::SUFFIX_MODE($request->isTpaTo()) . 'From:' . $request->getSender() . ' Expired for:' . $request->getLastFor() . "\n";;
+				$forExp .= TPRequest::SUFFIX_MODE($request->isTpTo()) . 'From:' . $request->getSender() . ' Expired for:' . $request->getLastFor() . "\n";;
 				continue;
 			}
-			$forTxt .= TPRequest::SUFFIX_MODE($request->isTpaTo()) . 'From:' . $request->getSender() . ' Timeout:' . $request->getLastFor() . "\n";
+			$forTxt .= TPRequest::SUFFIX_MODE($request->isTpTo()) . 'From:' . $request->getSender() . ' Timeout:' . $request->getLastFor() . "\n";
 		}
 
 		$by = $this->requestList->getAllBy($sender->getName());
@@ -51,20 +51,20 @@ class TPListCommand extends PluginCommand implements CommandExecutor
 		$byExp = '';
 		foreach($by as $request){
 			if(!$request->isValid()){
-				$byExp .= TPRequest::SUFFIX_MODE($request->isTpaTo()) . 'To:' . $request->getReceiver() . ' Expired for:' . $request->getLastFor() . "\n";;
+				$byExp .= TPRequest::SUFFIX_MODE($request->isTpTo()) . 'To:' . $request->getReceiver() . ' Expired for:' . $request->getLastFor() . "\n";;
 				continue;
 			}
-			$byTxt .= TPRequest::SUFFIX_MODE($request->isTpaTo()) . 'To:' . $request->getReceiver() . ' Timeout:' . $request->getLastFor() . "\n";
+			$byTxt .= TPRequest::SUFFIX_MODE($request->isTpTo()) . 'To:' . $request->getReceiver() . ' Timeout:' . $request->getLastFor() . "\n";
 		}
 
-		$sender->sendMessage("Pending Incoming Request");
+		$sender->sendMessage(TPRequest::PREFIX()."Pending Incoming Request");
 		$sender->sendMessage($forTxt);
-		$sender->sendMessage("Pending Outgoing Request");
+		$sender->sendMessage(TPRequest::PREFIX()."Pending Outgoing Request");
 		$sender->sendMessage($byTxt);
 
-		$sender->sendMessage("Expired Incoming Request");
+		$sender->sendMessage(TPRequest::PREFIX()."Expired Incoming Request");
 		$sender->sendMessage($forExp);
-		$sender->sendMessage("Expired Outgoing Request");
+		$sender->sendMessage(TPRequest::PREFIX()."Expired Outgoing Request");
 		$sender->sendMessage($byExp);
 
 		$this->requestList->cleanInvalidFor($sender->getName());

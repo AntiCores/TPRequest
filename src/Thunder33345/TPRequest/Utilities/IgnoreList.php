@@ -25,23 +25,21 @@ class IgnoreList
 	public function isIgnored(Player $by, Player $whom)
 	{
 		$list = $this->getIgnore($by);
-		return isset($list[$whom->getUniqueId()->toString()]);
+		return in_array($whom->getLowerCaseName(), $list);
 	}
 
-	public function ignore(Player $as, Player $to)
+	public function ignore(Player $as, string $to)
 	{
 		$ignore = $this->getIgnore($as);
-		$to = $to->getUniqueId()->toString();
-		$ignore[] = $to;
+		$ignore[] = strtolower($to);
 		$this->setIgnore($as, $ignore);
 		return true;
 	}
 
-	public function unIgnore(Player $as, Player $to)
+	public function unIgnore(Player $as, string $to)
 	{
 		$ignore = $this->getIgnore($as);
-		$to = $to->getUniqueId()->toString();
-		unset($ignore[$to]);
+		unset($ignore[strtolower($to)]);
 		$this->setIgnore($as, $ignore);
 		return true;
 	}

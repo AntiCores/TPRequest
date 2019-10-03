@@ -10,6 +10,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\PluginCommand;
 use pocketmine\Player;
 use Thunder33345\TPRequest\TPRequest;
+use Thunder33345\TPRequest\Utilities\CooldownList;
 use Thunder33345\TPRequest\Utilities\Request;
 
 class TPDenyCommand extends PluginCommand implements CommandExecutor
@@ -18,10 +19,10 @@ class TPDenyCommand extends PluginCommand implements CommandExecutor
 
 	public function __construct(TPRequest $owner)
 	{
-		parent::__construct('tpdeny', $owner);
+		parent::__construct('tprdeny', $owner);
 		$this->setDescription('TP Deny Command');
-		$this->setUsage('/tpdeny <username>');
-		$this->setAliases(['tpd']);
+		$this->setUsage('/tprdeny <username|.>');
+		$this->setAliases(['tprd']);
 		$this->setPermission('tprequest.deny');
 		$this->setPermissionMessage(TPRequest::PREFIX() . 'Insufficient permissions.');
 		$this->setExecutor($this);
@@ -59,7 +60,12 @@ class TPDenyCommand extends PluginCommand implements CommandExecutor
 			return true;
 		}
 
-		$this->cooldownList->add($tpRequest->getSender(), (int)$this->tpRequest->getConfig()->get('tpDeniedCooldown', 45));
+		if(!$tpRequest->isValid()){//unnecessary?
+			$receiver->sendMessage(TPRequest::PREFIX_ERROR() . 'Your request has timed out');
+			return true;
+		}
+
+		$this->cooldownList->add($tpRequest->getSender(), CooldownList::TYPE_ACCEPT, (int)$this->tpRequest->getConfig()->getNested('request.acceptCooldown', 45));
 
 		$requestSender = $this->tpRequest->getServer()->getPlayer($tpRequest->getSender());
 

@@ -22,11 +22,11 @@ class TPIgnoreCommand extends PluginCommand implements CommandExecutor
 
 	public function __construct(TPRequest $owner)
 	{
-		parent::__construct('tpignore', $owner);
+		parent::__construct('tprignore', $owner);
 
 		$this->setDescription('TP Ignore Command');
-		$this->setUsage('/tpignore  <add[+]|del[-] player>|<list>|<all on|off>|<tip on|off>');
-		$this->setAliases(['tpi']);
+		$this->setUsage('/tprignore  <add[+]|del[-] player>|<list>|<all on|off>|<tip on|off>');
+		$this->setAliases(['tpri']);
 		$this->setPermission('tprequest.ignore');
 		$this->setPermissionMessage(TPRequest::PREFIX() . 'Insufficient permissions.');
 		$this->setExecutor($this);
@@ -45,7 +45,7 @@ class TPIgnoreCommand extends PluginCommand implements CommandExecutor
 		switch(strtolower($args[0])){
 			case 'list':
 				$sender->sendMessage(TPRequest::PREFIX() . 'Ignored users: ' . implode(', ', $this->ignoreList->getIgnore($sender)));
-				break;
+				return true;
 
 			case 'add':
 			case '+':
@@ -54,20 +54,15 @@ class TPIgnoreCommand extends PluginCommand implements CommandExecutor
 				if(!isset($args[1]))
 					return false;
 				$name = $args[1];
-				$player = $this->tpRequest->getServer()->getPlayerExact($name);
-				if(!$player instanceof Player){
-					$sender->sendMessage(TPRequest::PREFIX() . 'Cannot find player named "' . $name . '"');
-					return true;
-				}
 				switch(strtolower($args[0])){
 					case 'add':
 					case '+':
-						$this->ignoreList->ignore($sender, $player);
+						$this->ignoreList->ignore($sender, $name);
 						$sender->sendMessage(TPRequest::PREFIX() . 'Added "' . $name . '" to your ignore list');
 						break;
 					case 'del':
 					case '-':
-						$this->ignoreList->unIgnore($sender, $player);
+						$this->ignoreList->unIgnore($sender, $name);
 						$sender->sendMessage(TPRequest::PREFIX() . 'Removed "' . $name . '" from your ignore list');
 						break;
 					default:
@@ -114,6 +109,5 @@ class TPIgnoreCommand extends PluginCommand implements CommandExecutor
 			default:
 				return false;
 		}
-		return false;
 	}
 }

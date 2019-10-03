@@ -41,8 +41,8 @@ class TPRequest extends PluginBase implements Listener
 		$this->saveDefaultConfig();
 		$ignoreList = new Config($this->getDataFolder() . 'ignorelist.json', Config::JSON, []);
 		$this->ignoreList = new IgnoreList($ignoreList);
-		$timeout = $this->getConfig()->get('tpTimeout', 60);
-		if(!is_int($timeout)) $timeout = 60;
+		$timeout = $this->getConfig()->getNested('request.timeout', 120);
+		if(!is_int($timeout)) $timeout = 120;
 		$this->requestList = new RequestList($timeout);
 		$this->cooldownList = new CooldownList();
 
@@ -91,7 +91,7 @@ class TPRequest extends PluginBase implements Listener
 		}
 		if(count($str) > 0){
 			$str = implode(', ', $str);
-		} else{
+		} else {
 			$str = $diff->s . ' second';
 		}
 		return $str;
@@ -110,6 +110,11 @@ class TPRequest extends PluginBase implements Listener
 	static public function PREFIX()
 	{
 		return TPRequest::TPR(TextFormat::BLUE) . TextFormat::RESET;
+	}
+
+	static public function PREFIX_ERROR()
+	{
+		return TextFormat::YELLOW . '(!)' . self::PREFIX();
 	}
 
 	static public function PREFIX_OUTGOING()
@@ -133,12 +138,11 @@ class TPRequest extends PluginBase implements Listener
 		if($tpaTo){
 			$mid = 'TR';
 			$midc = TextFormat::BLUE;
-		} else{
+		} else {
 			$mid = 'TH';
 			$midc = TextFormat::YELLOW;
 		}
-		self::colorize(['(', $mid, ')'], [TextFormat::GOLD, $midc]);
-
+		return self::colorize(['(', $mid, ')'], [TextFormat::GOLD, $midc]);
 	}
 
 	//const PREFIX = 'toberemoved';

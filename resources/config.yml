@@ -3,11 +3,13 @@
 
 request: {
   # How Long before the TP request timeouts
-  timeout: 60,
+  timeout: 120,
   # How long you have to wait before you can send a request after you sent one
-  cooldown: 30,
-  # How long of a cooldown penalty you would get added onto if your tp request was denied
-  deniedCooldown: "45"
+  requestCooldown: 20,
+  # How long you have to wait before you can accept a request after you accepted one(separated from accept cooldown)
+  acceptCooldown: 10,
+  # How long of a cooldown penalty you would get added onto your request cooldown, if your tp request was denied
+  deniedCooldown: 45
 }
 
 ##everything below is not implemented

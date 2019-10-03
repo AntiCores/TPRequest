@@ -51,7 +51,7 @@ class Request
 		return $this->sendTime;
 	}
 
-	public function isTpaTo():bool
+	public function isTpTo():bool
 	{
 		return $this->tpaTo;
 	}
