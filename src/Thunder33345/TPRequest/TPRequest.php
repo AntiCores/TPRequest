@@ -48,12 +48,12 @@ class TPRequest extends PluginBase implements Listener
 
 		$commandMap = $this->getServer()->getCommandMap();
 		$tpaRequest = new TPRequestCommand($this);
-		$commandMap->register('tprequest', $tpaRequest);
-		$commandMap->register('tphererequest', new TPHereRequestCommand($this, $tpaRequest));
-		$commandMap->register('tpaccept', new TPAcceptCommand($this));
-		$commandMap->register('tplist', new TPListCommand($this));
-		$commandMap->register('tpdeny', new TPDenyCommand($this));
-		$commandMap->register('tpignore', new TPIgnoreCommand($this));
+		$commandMap->register($this->getName(), $tpaRequest);
+		$commandMap->register($this->getName(), new TPHereRequestCommand($this, $tpaRequest));
+		$commandMap->register($this->getName(), new TPAcceptCommand($this));
+		$commandMap->register($this->getName(), new TPListCommand($this));
+		$commandMap->register($this->getName(), new TPDenyCommand($this));
+		$commandMap->register($this->getName(), new TPIgnoreCommand($this));
 
 
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
